@@ -1,8 +1,14 @@
 import type { NextPage } from 'next';
+import Navbar from 'components/Navbar';
+import Footer from 'components/Footer';
 
-const Layout: NextPage = () => {
+const Layout: NextPage = ({children}) => {
     return (
-      <div>121212</div>
+      <>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
+      </>
   );
 };
 
