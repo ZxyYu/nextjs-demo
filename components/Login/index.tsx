@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import { Button, message } from 'antd';
 import '@ant-design/v5-patch-for-react-19';
-
+import { withIronSessionApiRoute } from "iron-session/next";
 import CountDown from 'components/CountDown';
 import request from "services/fetch";
 import './index.css';
