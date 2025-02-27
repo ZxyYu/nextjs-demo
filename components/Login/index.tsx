@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import { Button, message } from 'antd';
 import '@ant-design/v5-patch-for-react-19';
-import { withIronSessionApiRoute } from "iron-session/next";
+// import { withIronSessionApiRoute } from "iron-session/next";
 import CountDown from 'components/CountDown';
 import request from "services/fetch";
 import './index.css';
@@ -26,29 +26,62 @@ const Login: NextPage = ({ isShow, onClose }: LoginProps) => {
     };
 
     // 调用接口获取验证码
-    const handleGetVerifyCode = async () => {
-        console.log("message", message);
+    const handleGetVerifyCode = async() => {
         if (!form?.phone) {
             console.log(form?.phone);
             message?.warning('请输入手机号');
             return;
         };
-        setShowVerifyCode(true);
-        const res = await request.post("/api/user/sendVerifyCode", {
-            to: form?.phone,
-            templateId: "1",
-        });
-        console.log("res", res);
-        if (res?.code === 200) {
-            setShowVerifyCode(true);
-            message?.success(res?.msg || "获取验证码成功");
-        } else {
-            message?.error(res?.msg || "获取验证码失败");
-        };
+        // setShowVerifyCode(true);
+        // 1、单独搭建的服务端请求方式
+        // const res = await request.post("/api/user/sendVerifyCode", {
+        //     to: form?.phone,
+        //     templateId: "1",
+        // });
+        // console.log("res", res);
+        // if (res?.code === 200) {
+        //     setShowVerifyCode(true);
+        //     message?.success(res?.msg || "获取验证码成功");
+        // } else {
+        //     message?.error(res?.msg || "获取验证码失败");
+        // };
+
+
+        // 2、使用next提供的api方式
+        try {
+            const res = await request?.post("/api/user/sendVerifyCode", {
+                to: form?.phone,
+                templateId: "1",
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (res?.code === 0) {
+                setShowVerifyCode(true);
+                message?.success(res?.msg || "获取验证码成功");
+            } else {
+                message?.error(res?.msg || "获取验证码失败");
+           };
+        } catch (error) {
+            console.error(error);
+        };        
     };
 
-    const handleLogin = () => {
-        
+    const handleLogin = async() => {
+        const res = await request.post("/api/user/login", {
+            phone: form?.phone,
+            verify: form?.verify,
+
+        });
+
+        if (res?.code === 200) {
+            message?.success(res?.msg || "登录成功");
+            // ......
+            onClose();
+        } else {
+            message?.error(res?.msg || "登录失败");
+        }
     };
 
     const handleOAtuhGitHub = () => {
