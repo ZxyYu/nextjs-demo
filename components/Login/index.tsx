@@ -75,12 +75,12 @@ const Login: NextPage = ({ isShow, onClose }: LoginProps) => {
 
         });
 
-        if (res?.code === 200) {
+        if (res?.code === 0) {
             message?.success(res?.msg || "登录成功");
             // ......
             onClose();
         } else {
-            message?.error(res?.msg || "登录失败");
+            message?.error(res?.msg || "未知错误");
         }
     };
 

@@ -3,7 +3,7 @@ import md5 from "md5";
 import { encode } from "js-base64";
 
 import requests from "services/fetch";
-import { setSession } from "lib/config"
+import { setSession } from "lib/config";
 
 export async function POST(request: Request) {
     try {

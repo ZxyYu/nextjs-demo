@@ -18,11 +18,13 @@
     "md5": "^2.3.0",
     "mockjs": "^1.1.0",
     "moment": "^2.30.1",
+    "mongodb": "^6.13.1",
     "next": "15.1.7",
     "prettier": "^3.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sass": "^1.85.0"
+    "sass": "^1.85.0",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
