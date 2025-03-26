@@ -22,7 +22,7 @@ const Login: NextPage = ({ isShow, onClose }: LoginProps) => {
     const [isShowVerifyCode, setShowVerifyCode] = useState(false); // 是否显示验证码
 
     const handleClose = () => {
-        
+        onClose()
     };
 
     // 调用接口获取验证码
@@ -57,6 +57,7 @@ const Login: NextPage = ({ isShow, onClose }: LoginProps) => {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log("res", res);
             if (res?.code === 0) {
                 setShowVerifyCode(true);
                 message?.success(res?.msg || "获取验证码成功");
@@ -64,7 +65,9 @@ const Login: NextPage = ({ isShow, onClose }: LoginProps) => {
                 message?.error(res?.msg || "获取验证码失败");
            };
         } catch (error) {
-            console.error(error);
+            console.log("获取验证码失败");
+            // console.error(error);
+            throw error;
         };        
     };
 
@@ -72,7 +75,7 @@ const Login: NextPage = ({ isShow, onClose }: LoginProps) => {
         const res = await request.post("/api/user/login", {
             phone: form?.phone,
             verify: form?.verify,
-
+            identity_type: "phone",  // 登录方式（暂时写死手机号登录 后续有不同登录后可传入）
         });
 
         if (res?.code === 0) {

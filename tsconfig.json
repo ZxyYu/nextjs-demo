@@ -13,6 +13,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "emitDecoratorMetadata": true,   // 必须为 true
+    "experimentalDecorators": true,   // 必须为 true
     "plugins": [
       {
         "name": "next"

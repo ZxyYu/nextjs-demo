@@ -36,3 +36,18 @@ export const setSession = async (name, params) => {
     // 保存session
     await session.save();
 };
+
+/**
+ * 导出一个异步函数getSession，用于获取session
+ * @param name: string session的名称
+ * @param params: any session的值
+ */
+export const getSession = async () => {
+
+    // 获取cookieStore
+    const cookieStore = await cookies();
+
+    // 使用cookieStore和sessionOptions获取IronSession
+    const session: ISession = await getIronSession(cookieStore, sessionOptions);
+    return session;
+}
